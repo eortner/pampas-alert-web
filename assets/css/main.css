@@ -3997,3 +3997,103 @@ input, select, textarea {
 	body.is-mobile.landing #footer {
 		background-color: #1d242a;
 	}
+
+	/* Custom crop sunset imagery */
+.banner-crops {
+	background-image: url("../images/hero-crops-sunset.jpg");
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+  }
+  .wrapper.alt.style2 .spotlight .image img {
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+  }
+
+/* Banner uses 1.jpg */
+.banner-crops {
+	background-image: url("../images/1.jpg");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+  }
+  
+  /* Dark override for the first info section */
+  .wrapper.style1.special.dark-override {
+	background-color: #1f1f1f !important;
+	color: #f2f2f2 !important;
+  }
+  .wrapper.style1.special.dark-override h2,
+  .wrapper.style1.special.dark-override p,
+  .wrapper.style1.special.dark-override .icons .icon {
+	color: #f2f2f2 !important;
+  }
+  
+  /* Responsive Google Map */
+  .map-responsive {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	height: 0;
+	overflow: hidden;
+	border-radius: 0.5rem;
+  }
+  .map-responsive iframe {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+  }
+/* Unificar tamaños de imágenes en spotlight */
+.wrapper.alt.style2 .spotlight .image {
+	position: relative;
+	width: 100%;
+	max-height: none;
+	overflow: hidden;
+  }
+  
+  /* Altura fija consistente (ajusta 380px a tu gusto) */
+  .wrapper.alt.style2 .spotlight .image img {
+	display: block;
+	width: 100%;
+	height: 380px;
+	object-fit: cover;
+	object-position: center;
+  }
+  /* Dark, discreet mobile/off-canvas menu panel */
+#menu {
+	background: #121212 !important;      /* fondo oscuro */
+	color: #eaeaea !important;           /* texto claro */
+  }
+  #menu .inner,
+  #menu ul,
+  #menu ul li a {
+	color: #eaeaea !important;
+  }
+  #menu ul li a {
+	border-top-color: rgba(255,255,255,0.08) !important; /* líneas divisorias suaves */
+  }
+  #menu .close {
+	color: #bbbbbb !important;           /* icono/cerrar discreto */
+  }
+  #menu ul li a:hover,
+  #menu ul li a:focus {
+	background: rgba(255,255,255,0.06) !important; /* hover sutil */
+	color: #ffffff !important;
+  }
+  
+  /* Botón que abre el menú (menuToggle) más neutro en estados alt */
+  #header .menuToggle {
+	color: #eaeaea !important;
+	background: rgba(0,0,0,0.25) !important;
+	border-radius: 4px;
+  }
+  #header.alt .menuToggle {
+	background: rgba(0,0,0,0.35) !important;
+  }
+  #header .menuToggle:hover {
+	background: rgba(255,255,255,0.08) !important;
+  }
+  
+  
+  

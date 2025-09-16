@@ -1,254 +1,300 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Crop Analyzer | Analizador de Cultivos</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <!-- Spectral-inspired Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    /* ---- 1. Base colours (higher contrast) ---- */
-    :root{
-      --bg-light:#f5f6f7;          /* Spectral-like light */
-      --bg-dark:#2a2f4a;           /* deep indigo */
-      --accent:#4c5c96;            /* indigo accent */
-      --accent-light:#6f7db2;      /* hover */
-      --text-dark:#444;            /* body text */
-      --text-light:#ffffff;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Source Sans Pro',sans-serif;background:var(--bg-light);color:var(--text-dark);line-height:1.7;}
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Pampas Smart Alert</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <!-- Font Awesome 6 (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <style>
+      .banner-crops { background-image:url("assets/images/1.jpg"); background-size:cover; background-position:center; background-repeat:no-repeat; }
+      .wrapper.style1.special.dark-override { background-color:#1f1f1f!important; color:#f2f2f2!important; }
+      .wrapper.style1.special.dark-override h2,.wrapper.style1.special.dark-override p { color:#f2f2f2!important; }
 
-    /* ---- 2. Spectral-like hero ---- */
-    .hero{
-      position:relative;
-      color:var(--text-light);
-      text-align:center;
-      padding:7rem 1rem 5rem;
-      overflow:hidden;
-      background:linear-gradient(135deg,rgba(76,92,150,0.9),rgba(42,47,74,0.95));
-    }
-    .hero > *{position:relative;z-index:1}
-    .bg-video{position:absolute;inset:0;z-index:0}
-    .bg-video video{width:100%;height:100%;object-fit:cover}
-    .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(60deg,rgba(0,0,0,0.55),rgba(0,0,0,0.25));z-index:0}
-    .hero h1{font-size:3rem;font-weight:300;letter-spacing:0.02em;margin-bottom:1rem}
-    .hero p{font-size:1.25rem;margin-bottom:2rem}
-    .btn{display:inline-block;background:var(--accent);color:var(--text-light);padding:0.9rem 2.2rem;border-radius:3px;text-decoration:none;font-weight:600;transition:transform .15s ease, background .25s}
-    .btn:hover{background:var(--accent-light);transform:translateY(-1px)}
+      /* Animated sequence */
+      .icons-seq { display:flex; gap:1.25rem; justify-content:center; align-items:center; flex-wrap:wrap; }
+      .icons-seq .unit,.icons-seq .op { text-align:center; }
+      .icons-seq .unit { opacity:0; transform:scale(.85); }
+      .icons-seq .op { opacity:0; transform:translateY(4px); }
+      .icons-seq.play .unit { animation:seqIn 1s ease-out forwards; }
+      .icons-seq.play .unit-1 { animation-delay:0s; } .icons-seq.play .unit-2 { animation-delay:.6s; } .icons-seq.play .unit-3 { animation-delay:1.2s; } .icons-seq.play .unit-4 { animation-delay:2s; }
+      .icons-seq.play .op { animation:fadeIn .3s ease-out forwards; }
+      .icons-seq.play .op.op-plus-1 { animation-delay:.45s; } .icons-seq.play .op.op-plus-2 { animation-delay:1.05s; } .icons-seq.play .op.op-eq { animation-delay:1.8s; }
+      @keyframes seqIn { 0%{opacity:0;transform:scale(.85)}60%{opacity:1;transform:scale(1.06)}100%{opacity:1;transform:scale(1)} }
+      @keyframes fadeIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
+      .icons-seq .unit i { font-size:3rem; display:block; }
+      .icons-seq .label { margin-top:.4rem; font-size:.95rem; opacity:.9; }
+      .icons-seq .unit-1 i{color:#5bc0de}.icons-seq .unit-2 i{color:#f0ad4e}.icons-seq .unit-3 i{color:#5cb85c}.icons-seq .unit-4 i{color:#d9534f}
+      .icons-seq .op{color:#ccc}.dark-override .icons-seq .label{color:#f2f2f2}
+      #menu ul { text-transform:none; }
+      .lang-switch a { cursor:pointer; }
+      .lang-active { font-weight:700; text-decoration:underline; }
 
-    /* ---- 3. Sections ---- */
-    section{padding:4rem 1rem;max-width:1100px;margin:auto}
-    section.alt{background:var(--bg-dark);color:var(--text-light);border-radius:6px}
-    h2{font-size:2rem;font-weight:400;margin-bottom:2rem;text-align:center}
-    /* tech sections */
-    #tech-satellite,#tech-weather,#tech-opengov,#tech-ai{scroll-margin-top:80px}
-    #tech-satellite{background:transparent}
-    #tech-weather{border-radius:6px}
-    #tech-opengov{background:transparent}
-    #tech-ai{border-radius:6px}
+      /* Spotlight equal image heights */
+      .wrapper.alt.style2 .spotlight .image { position:relative; width:100%; max-height:none; overflow:hidden; }
+      .wrapper.alt.style2 .spotlight .image img { display:block; width:100%; height:380px; object-fit:cover; object-position:center; }
 
-    /* ---- 4. Gallery grid ---- */
-    .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
-    .gallery img{width:100%;height:220px;object-fit:cover;border-radius:4px}
+      /* Dark, discreet menu panel */
+      #menu { background:#121212!important; color:#eaeaea!important; }
+      #menu .inner,#menu ul,#menu ul li a { color:#eaeaea!important; }
+      #menu ul li a { border-top-color:rgba(255,255,255,0.08)!important; }
+      #menu .close { color:#bbb!important; }
+      #menu ul li a:hover,#menu ul li a:focus { background:rgba(255,255,255,0.06)!important; color:#fff!important; }
+      #header .menuToggle { color:#eaeaea!important; background:rgba(0,0,0,0.25)!important; border-radius:4px; }
+      #header.alt .menuToggle { background:rgba(0,0,0,0.35)!important; }
+      #header .menuToggle:hover { background:rgba(255,255,255,0.08)!important; }
 
-    /* ---- 5. Spotlights ---- */
-    .spotlight{display:grid;grid-template-columns:1.1fr 1fr;gap:2rem;align-items:center}
-    .spotlight.alt{grid-template-columns:1fr 1.1fr}
-    .spotlight img{width:100%;height:280px;object-fit:cover;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,0.12)}
-    .spotlight .content{background:#fff;color:var(--text-dark);border-radius:6px;padding:2rem;box-shadow:0 4px 12px rgba(0,0,0,0.06)}
-    @media(max-width:900px){.spotlight,.spotlight.alt{grid-template-columns:1fr}.spotlight img{height:220px}}
+      /* Contact section */
+      #contact.wrapper.style4 .inner { max-width:60rem; margin:0 auto; }
+      .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; align-items:start; }
+      .contact-card { background:rgba(255,255,255,0.04); padding:1rem 1.25rem; border-radius:8px; }
+      .contact-list { list-style:none; padding:0; margin:0; }
+      .contact-list li { display:flex; align-items:center; gap:.6rem; margin:.4rem 0; }
+      .map-responsive { position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:8px; }
+      .map-responsive iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+      @media (max-width:736px){ .contact-grid { grid-template-columns:1fr; } }
+    </style>
+  </head>
+  <body class="landing is-preload">
+    <div id="page-wrapper">
 
-    /* ---- 6. Contact grid ---- */
-    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
-    .contact-form label{display:block;margin-bottom:0.3rem;font-weight:600}
-    .contact-form input,.contact-form textarea{width:100%;padding:0.7rem;border:1px solid #ccd6e0;border-radius:3px;margin-bottom:1rem}
-    .map iframe{width:100%;height:260px;border:0;border-radius:3px}
+      <header id="header" class="alt">
+        <h1><a href="index.html" data-i18n="brand">Pampas Smart Alert</a></h1>
+        <nav id="nav">
+          <ul>
+            <li class="special">
+              <a href="#menu" class="menuToggle"><span data-i18n="menu">Menu</span></a>
+              <div id="menu">
+                <ul class="lang-switch">
+                  <li><a data-lang="es" class="lang-active">Español</a></li>
+                  <li><a data-lang="en">English</a></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </header>
 
-    /* ---- 7. Language toggle ---- */
-    html[lang='en'] .lang-es{display:none}
-    html[lang='es'] .lang-en{display:none}
-    .toggle-wrap{text-align:center;margin-top:2rem}
-    .toggle-btn{cursor:pointer;margin:0 0.5rem;font-weight:600}
+      <section id="banner" class="banner-crops">
+        <div class="inner">
+          <h2 data-i18n="title">Pampas Smart Alert</h2>
+          <p data-i18n="tagline">Alertas inteligentes de cultivos</p>
+          <ul class="actions special">
+            <li><a href="#contact" class="button primary" data-i18n="seeData">Contactar</a></li>
+          </ul>
+        </div>
+        <a href="#one" class="more scrolly" data-i18n="learnMore">Saber más</a>
+      </section>
 
-    /* ---- 8. Footer ---- */
-    footer{background:var(--bg-dark);color:var(--text-light);text-align:center;padding:2rem 1rem;margin-top:4rem;font-size:0.9rem}
-    @media(max-width:750px){
-      .contact-grid{grid-template-columns:1fr}
-    }
-  </style>
-</head>
-<body>
+      <section id="one" class="wrapper style1 special dark-override">
+        <div class="inner">
+          <header class="major">
+            <h2 data-i18n="sec1Title">Datos de cultivos inteligentes</h2>
+            <p data-i18n="sec1Desc">Unificamos fuentes oficiales, observación satelital y modelos de IA para decisiones agronómicas precisas.</p>
+          </header>
+          <div class="icons-seq" id="icons-seq">
+            <div class="unit unit-1">
+              <i class="fa-solid fa-database" aria-hidden="true"></i>
+              <span class="label" data-i18n="iconData">Datos</span>
+            </div>
+            <div class="op op-plus-1"><i class="fa-solid fa-plus"></i></div>
+            <div class="unit unit-2">
+              <i class="fa-solid fa-satellite" aria-hidden="true"></i>
+              <span class="label" data-i18n="iconSat">Satélites</span>
+            </div>
+            <div class="op op-plus-2"><i class="fa-solid fa-plus"></i></div>
+            <div class="unit unit-3">
+              <i class="fa-solid fa-brain" aria-hidden="true"></i>
+              <span class="label" data-i18n="iconAI">IA</span>
+            </div>
+            <div class="op op-eq"><i class="fa-solid fa-equals"></i></div>
+            <div class="unit unit-4">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+              <span class="label" data-i18n="iconAlert">Alerta</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <!-- Header -->
-  <header style="background:transparent;position:sticky;top:0;z-index:10;">
-    <nav style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:1rem 1rem;">
-      <div style="display:flex;align-items:center;gap:0.6rem;font-weight:700;color:#fff;letter-spacing:0.03em">
-        <span style="display:inline-block;width:28px;height:28px;background:#ffffff22;border:2px solid #fff;border-radius:50%"></span>
-        <span>CROP ANALYZER</span>
-      </div>
-      <div style="display:flex;gap:1rem;color:#fff;font-weight:600;">
-        <a href="#about" style="color:#fff;text-decoration:none" class="lang-en">About</a>
-        <a href="#about" style="color:#fff;text-decoration:none" class="lang-es">Sobre</a>
-        <a href="#tech-satellite" style="color:#fff;text-decoration:none">Tech</a>
-        <a href="#contact" style="color:#fff;text-decoration:none" class="lang-en">Contact</a>
-        <a href="#contact" style="color:#fff;text-decoration:none" class="lang-es">Contacto</a>
-      </div>
-    </nav>
-  </header>
+      <section id="two" class="wrapper alt style2">
+        <section class="spotlight">
+          <div class="image"><img src="assets/images/2.jpg" alt="" /></div>
+          <div class="content">
+            <h2 data-i18n="sec2Title">Datos oficiales (INTA, SENASA, SMN)</h2>
+            <p data-i18n="sec2Desc">Integramos clima, suelos y ensayos del INTA; sanidad y movimientos de SENASA; y meteorología del SMN para soja, maíz, trigo y girasol en la región pampeana.</p>
+          </div>
+        </section>
+        <section class="spotlight">
+          <div class="image"><img src="assets/images/3.jpg" alt="" /></div>
+          <div class="content">
+            <h2 data-i18n="sec3Title">Observación satelital</h2>
+            <p data-i18n="sec3Desc">Series de NDVI, humedad y precipitación derivadas de satélite para vigilar vigor, estrés hídrico y estados fenológicos con alta frecuencia.</p>
+          </div>
+        </section>
+        <section id="three" class="spotlight">
+          <div class="image"><img src="assets/images/4.jpg" alt="" /></div>
+          <div class="content">
+            <h2 data-i18n="sec4Title">Histórico + IA</h2>
+            <p data-i18n="sec4Desc">Décadas de clima y rendimiento entrenan modelos que estiman riesgo y rendimiento esperado por cultivo y zona (maíz temprano/tardío, soja 1ª/2ª, etc.).</p>
+          </div>
+        </section>
+      </section>
 
-  <!-- Hero / Banner -->
-  <section class="hero">
-    <div class="bg-video" aria-hidden="true">
-      <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80">
-        <!-- Replace the src below with your preferred MP4 crop footage URL -->
-        <source src="" type="video/mp4">
-      </video>
+      <!-- Contact section -->
+      <section id="contact" class="wrapper style4">
+        <div class="inner">
+          <header class="major">
+            <h2 data-i18n="contactTitle">Contactar</h2>
+            <p data-i18n="contactDesc">Escríbenos o llama para coordinar una demo y activar alertas en tu zona.</p>
+          </header>
+          <div class="contact-grid">
+            <div class="contact-card">
+              <ul class="contact-list">
+                <li><i class="fa-solid fa-phone"></i> <a href="tel:+3548585796">+354 858 5796</a></li>
+                <li><i class="fa-solid fa-envelope"></i> <a href="mailto:eortner+crops@gmail.com">eortner+crops@gmail.com</a></li>
+                <li><i class="fa-solid fa-location-dot"></i> <span data-i18n="city">Buenos Aires, Argentina</span></li>
+              </ul>
+            </div>
+            <div class="map-responsive">
+              <iframe
+                src="https://www.google.com/maps?q=Buenos%20Aires%2C%20Argentina&hl=es;z=11&output=embed"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer id="footer">
+        <ul class="icons">
+          <li><a href="mailto:eortner+crops@gmail.com" class="icon"><i class="fa-solid fa-envelope"></i><span class="label">Email</span></a></li>
+          <li><a href="tel:+3548585796" class="icon"><i class="fa-solid fa-phone"></i><span class="label">Phone</span></a></li>
+          <li><a href="https://maps.google.com/?q=Buenos%20Aires%2C%20Argentina" class="icon" target="_blank" rel="noopener"><i class="fa-solid fa-location-dot"></i><span class="label" data-i18n="location">Ubicación</span></a></li>
+        </ul>
+        <ul class="copyright">
+          <li>&copy; <span data-i18n="brand">Pampas Smart Alert</span></li><li><span data-i18n="city">Buenos Aires, Argentina</span></li><li>HTML5 UP</li>
+        </ul>
+      </footer>
+
     </div>
-    <h1>CROP ANALYZER</h1>
-    <p class="lang-en">AI-driven crop intelligence for the Pampas and beyond</p>
-    <p class="lang-es">Inteligencia agrícola impulsada por IA para la Pampa y más allá</p>
-    <div style="margin-top:1.5rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-      <a href="#about" class="btn lang-en">Learn More</a>
-      <a href="#about" class="btn lang-es">Saber más</a>
-      <a href="#contact" class="btn lang-en" style="background:#ffffff22;border:1px solid #fff">Contact</a>
-      <a href="#contact" class="btn lang-es" style="background:#ffffff22;border:1px solid #fff">Contacto</a>
-    </div>
-    <div class="toggle-wrap">
-      <span class="toggle-btn" onclick="setLang('en')">EN</span> |
-      <span class="toggle-btn" onclick="setLang('es')">ES</span>
-    </div>
-  </section>
 
-  <!-- About -->
-  <section id="about">
-    <h2 class="lang-en">About Us</h2>
-    <h2 class="lang-es">Sobre Nosotros</h2>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
 
-    <p class="lang-en">
-      Crop Analyzer merges government, satellite and weather-station data, then applies machine-learning models trained on historical harvests to deliver real-time alerts, boosting yield while preserving soil health worldwide.
-    </p>
-    <p class="lang-es">
-      Crop Analyzer integra datos gubernamentales, satelitales y meteorológicos, y aplica modelos de aprendizaje automático entrenados con cosechas históricas para ofrecer alertas en tiempo real que aumentan el rendimiento preservando la salud del suelo a nivel global.
-    </p>
-  </section>
+    <!-- Trigger icon animation on visibility -->
+    <script>
+      (function() {
+        var seq = document.getElementById('icons-seq');
+        if (!seq) return;
+        if (!('IntersectionObserver' in window)) { seq.classList.add('play'); return; }
+        var played = false;
+        var io = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting && !played) {
+              seq.classList.add('play');
+              played = true;
+              io.disconnect();
+            }
+          });
+        }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
+        io.observe(seq);
+      })();
+    </script>
 
-  <!-- Technology: Satellite -->
-  <section id="tech-satellite">
-    <h2>🛰️ <span class="lang-en">Satellite Data</span><span class="lang-es">Datos Satelitales</span></h2>
-    <div class="spotlight">
-      <img src="https://images.unsplash.com/photo-1464851707681-f9d5fdaccea8?auto=format&fit=crop&w=900&q=80" alt="Satellite imagery over fields">
-      <div class="content">
-        <p class="lang-en">We fuse multispectral (NDVI, EVI) and radar (SAR) imagery updated every few days to detect crop vigor, biomass changes and soil moisture—despite clouds. Our tiling pipeline normalizes scenes and aligns them to field boundaries for consistent time series.</p>
-        <p class="lang-es">Fusionamos imágenes multiespectrales (NDVI, EVI) y de radar (SAR) actualizadas cada pocos días para detectar vigor del cultivo, cambios de biomasa y humedad del suelo, incluso con nubes. Nuestro proceso alinea y normaliza escenas por lote para series temporales consistentes.</p>
-      </div>
-    </div>
-  </section>
+    <!-- i18n with auto-detect + manual override -->
+    <script>
+      (function() {
+        var translations = {
+          es: {
+            brand:"Pampas Smart Alert", menu:"Menu", title:"Pampas Smart Alert",
+            tagline:"Alertas inteligentes de cultivos",
+            seeData:"Contactar", learnMore:"Saber más",
+            sec1Title:"Datos de cultivos inteligentes",
+            sec1Desc:"Unificamos fuentes oficiales, observación satelital y modelos de IA para decisiones agronómicas precisas.",
+            iconData:"Datos", iconSat:"Satélites", iconAI:"IA", iconAlert:"Alerta",
+            sec2Title:"Datos oficiales (INTA, SENASA, SMN)",
+            sec2Desc:"Integramos clima, suelos y ensayos del INTA; sanidad y movimientos de SENASA; y meteorología del SMN para soja, maíz, trigo y girasol en la región pampeana.",
+            sec3Title:"Observación satelital",
+            sec3Desc:"Series de NDVI, humedad y precipitación derivadas de satélite para vigilar vigor, estrés hídrico y estados fenológicos con alta frecuencia.",
+            sec4Title:"Histórico + IA",
+            sec4Desc:"Décadas de clima y rendimiento entrenan modelos que estiman riesgo y rendimiento esperado por cultivo y zona (maíz temprano/tardío, soja 1ª/2ª, etc.).",
+            contactTitle:"Contactar",
+            contactDesc:"Escríbenos o llama para coordinar una demo y activar alertas en tu zona.",
+            location:"Ubicación",
+            city:"Buenos Aires, Argentina"
+          },
+          en: {
+            brand:"Pampas Smart Alert", menu:"Menu", title:"Pampas Smart Alert",
+            tagline:"Smart crop alerts",
+            seeData:"Contact Us", learnMore:"Learn more",
+            sec1Title:"Intelligent crop data",
+            sec1Desc:"We unify official sources, satellite observation, and AI models for precise agronomic decisions.",
+            iconData:"Data", iconSat:"Satellites", iconAI:"AI", iconAlert:"Alert",
+            sec2Title:"Official data (INTA, SENASA, SMN)",
+            sec2Desc:"We integrate INTA climate/soils, SENASA health and movements, and SMN meteorology for soybean, corn, wheat, and sunflower across the Pampas.",
+            sec3Title:"Satellite observation",
+            sec3Desc:"NDVI, moisture, and precipitation series from satellites to track vigor, water stress, and phenological stages at high frequency.",
+            sec4Title:"Historical + AI",
+            sec4Desc:"Decades of climate and yields train models to estimate risk and expected performance by crop and zone (early/late corn, first/second soybean, etc.).",
+            contactTitle:"Contact Us",
+            contactDesc:"Write or call to schedule a demo and activate alerts in your area.",
+            location:"Location",
+            city:"Buenos Aires, Argentina"
+          }
+        };
 
-  <!-- Technology: Weather -->
-  <section id="tech-weather" class="alt">
-    <h2>🌦️ <span class="lang-en">Weather Grid</span><span class="lang-es">Red Meteorológica</span></h2>
-    <div class="spotlight alt">
-      <div class="content">
-        <p class="lang-en">A 4–9 km blended grid combines official forecasts with station networks and satellite precipitation. We downscale to field-level using terrain and land-cover priors to estimate temperature, rainfall and evapotranspiration affecting each parcel.</p>
-        <p class="lang-es">Una malla de 4–9 km combina pronósticos oficiales con redes de estaciones y precipitación satelital. Reescalamos al nivel del lote usando relieve y cobertura de suelo para estimar temperatura, lluvias y evapotranspiración que afectan cada parcela.</p>
-      </div>
-      <img src="https://images.unsplash.com/photo-1521543832200-860f17a4e6f9?auto=format&fit=crop&w=900&q=80" alt="Weather systems over farmland">
-    </div>
-  </section>
+        function apply(lang) {
+          var dict = translations[lang] || translations.es;
+          document.querySelectorAll('[data-i18n]').forEach(function(el){
+            var k = el.getAttribute('data-i18n');
+            if (dict[k] != null) el.textContent = dict[k];
+          });
+          document.querySelectorAll('.lang-switch a').forEach(function(a){
+            a.classList.toggle('lang-active', a.getAttribute('data-lang') === lang);
+          });
+          document.documentElement.setAttribute('lang', lang);
+        }
 
-  <!-- Technology: Open Gov -->
-  <section id="tech-opengov">
-    <h2>📊 <span class="lang-en">Open-Gov Stats</span><span class="lang-es">Datos Oficiales</span></h2>
-    <div class="spotlight">
-      <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=900&q=80" alt="Official documents and maps">
-      <div class="content">
-        <p class="lang-en">We ingest regulations, cadastral maps and historical yields to contextualize risk and compliance. Public datasets are cleaned, versioned and joined to your fields to benchmark performance and ensure traceability.</p>
-        <p class="lang-es">Incorporamos normativas, catastros y rindes históricos para contextualizar riesgo y cumplimiento. Los datos públicos se limpian, versionan y vinculan a tus lotes para comparar desempeño y asegurar trazabilidad.</p>
-      </div>
-    </div>
-  </section>
+        var current = 'es';
+        var stored = localStorage.getItem('lang');
+        if (stored && translations[stored]) { current = stored; apply(current); }
+        else {
+          try {
+            fetch('https://country.is').then(function(r){ return r.json(); }).then(function(data){
+              var code = (data && data.country) || '';
+              if (code && code.toUpperCase() !== 'AR') current = 'en';
+              else current = (navigator.language||'es').toLowerCase().startsWith('en') ? 'en' : 'es';
+              apply(current);
+            }).catch(function(){
+              current = (navigator.language||'es').toLowerCase().startsWith('en') ? 'en' : 'es';
+              apply(current);
+            });
+          } catch(e) {
+            current = (navigator.language||'es').toLowerCase().startsWith('en') ? 'en' : 'es';
+            apply(current);
+          }
+        }
 
-  <!-- Technology: AI Alerts -->
-  <section id="tech-ai" class="alt">
-    <h2>🤖 <span class="lang-en">AI Alerts</span><span class="lang-es">Alertas IA</span></h2>
-    <div class="spotlight alt">
-      <div class="content">
-        <p class="lang-en">Gradient-boosted and deep models score pest, frost and drought risks using satellite trends, weather anomalies and crop stage estimates. Explainability tools highlight the drivers so agronomists can act with confidence.</p>
-        <p class="lang-es">Modelos de gradiente y redes profundas puntúan riesgos de plagas, heladas y sequía usando tendencias satelitales, anomalías climáticas y estado fenológico. Herramientas de explicabilidad muestran los factores para actuar con confianza.</p>
-      </div>
-      <img src="https://images.unsplash.com/photo-1537799945301-b830a1afc2f0?auto=format&fit=crop&w=900&q=80" alt="AI analytics over fields">
-    </div>
-  </section>
-
-  <!-- Gallery -->
-  <section>
-    <h2 class="lang-en">Pampas Gallery</h2>
-    <h2 class="lang-es">Galería Pampeana</h2>
-
-    <div class="gallery">
-      <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=900&q=80" alt="">
-      <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=900&q=80" alt="">
-      <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=900&q=80" alt="">
-      <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=900&q=80" alt="">
-    </div>
-  </section>
-
-  <!-- Call to Action -->
-  <section class="alt" id="cta">
-    <h2 class="lang-en">Ready to boost your yields?</h2>
-    <h2 class="lang-es">¿Listo para potenciar tus rindes?</h2>
-    <p class="lang-en" style="text-align:center;max-width:760px;margin:0 auto 1.5rem;opacity:0.95">Connect your fields to real-time satellite and weather insights. Start with a free assessment and see risk alerts tailored to your crops.</p>
-    <p class="lang-es" style="text-align:center;max-width:760px;margin:0 auto 1.5rem;opacity:0.95">Conecta tus lotes a información satelital y meteorológica en tiempo real. Comienza con una evaluación gratuita y recibe alertas de riesgo para tus cultivos.</p>
-    <div style="text-align:center">
-      <a href="#contact" class="btn lang-en">Get Started</a>
-      <a href="#contact" class="btn lang-es">Comenzar</a>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section class="alt" id="contact">
-    <h2 class="lang-en">Contact Us</h2>
-    <h2 class="lang-es">Contáctanos</h2>
-
-    <div class="contact-grid">
-      <form class="contact-form">
-        <label class="lang-en">Name</label><label class="lang-es">Nombre</label>
-        <input type="text" required>
-        <label class="lang-en">Email</label><label class="lang-es">Correo electrónico</label>
-        <input type="email" required>
-        <label class="lang-en">Phone</label><label class="lang-es">Teléfono</label>
-        <input type="tel">
-        <label class="lang-en">Message</label><label class="lang-es">Mensaje</label>
-        <textarea rows="4" required></textarea>
-        <button class="btn lang-en" type="submit">Send</button>
-        <button class="btn lang-es" type="submit">Enviar</button>
-      </form>
-
-      <div class="map">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.32!2d-58.38!3d-34.61!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDM2JzUwLjQiUyA1OMKwMjI" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <span class="lang-en">© 2025 Crop Analyzer</span>
-    <span class="lang-es">© 2025 Analizador de Cultivos</span>
-  </footer>
-
-  <!-- Language toggle script -->
-  <script>
-    function setLang(lang){
-      document.documentElement.lang=lang;
-      try{localStorage.setItem('site-lang', lang);}catch(e){}
-    }
-    // initialize
-    (function(){
-      var saved='en';
-      try{saved=localStorage.getItem('site-lang')||'en';}catch(e){}
-      setLang(saved);
-    })();
-  </script>
-</body>
+        document.querySelectorAll('.lang-switch a').forEach(function(a){
+          a.addEventListener('click', function(e){
+            e.preventDefault();
+            var lang = a.getAttribute('data-lang');
+            if (lang) {
+              localStorage.setItem('lang', lang);
+              apply(lang);
+            }
+          });
+        });
+      })();
+    </script>
+  </body>
 </html>
