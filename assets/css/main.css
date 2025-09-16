@@ -4095,5 +4095,31 @@ input, select, textarea {
 	background: rgba(255,255,255,0.08) !important;
   }
   
+  /* Opción B: movimiento sutil de fondo con pseudo-capa animada */
+#banner {
+	position: relative;
+	overflow: hidden;
+  }
+  
+  /* Mueve la imagen con transform para mejor rendimiento (GPU) */
+  #banner::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-image: url("assets/images/1.jpg");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	transform: scale(1.05) translate3d(0, 0, 0); /* margen para evitar bordes */
+	animation: bannerDrift 50s linear infinite;
+	z-index: -1; /* detrás del contenido */
+	will-change: transform; /* hint de rendimiento */
+  }
+  
+  @keyframes bannerDrift {
+	0%   { transform: scale(1.05) translate3d(0%,   0%,   0); }
+	50%  { transform: scale(1.05) translate3d(-2%, -1%, 0); }
+	100% { transform: scale(1.05) translate3d(0%,   0%,   0); }
+  }
   
   
