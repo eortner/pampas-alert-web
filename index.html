@@ -1,174 +1,182 @@
-<!DOCTYPE HTML>
-<!--
-	Spectral by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Spectral by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="landing is-preload">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Crop Analyzer | Analizador de Cultivos</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- Spectral-inspired Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    /* ---- 1. Base colours (higher contrast) ---- */
+    :root{
+      --bg-light:#eef3f7;          /* light, soothing paper */
+      --bg-dark:#243447;           /* hero / footer */
+      --accent:#5d82a2;            /* primary buttons */
+      --accent-light:#8fa7c0;      /* hovers */
+      --text-dark:#1c2733;         /* body text */
+      --text-light:#ffffff;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Source Sans Pro',sans-serif;background:var(--bg-light);color:var(--text-dark);line-height:1.6;}
 
-		<!-- Page Wrapper -->
-			<div id="page-wrapper">
+    /* ---- 2. Spectral-like hero ---- */
+    .hero{
+      background:linear-gradient(60deg,rgba(0,0,0,0.6),rgba(0,0,0,0.3)),
+                 url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80") center/cover;
+      color:var(--text-light);
+      text-align:center;
+      padding:6rem 1rem;
+    }
+    .hero h1{font-size:3rem;font-weight:300;letter-spacing:0.02em;margin-bottom:1rem}
+    .hero p{font-size:1.25rem;margin-bottom:2rem}
+    .btn{display:inline-block;background:var(--accent);color:var(--text-light);padding:0.9rem 2.2rem;border-radius:3px;text-decoration:none;font-weight:600;transition:background .25s}
+    .btn:hover{background:var(--accent-light)}
 
-				<!-- Header -->
-					<header id="header" class="alt">
-						<h1><a href="index.html">Spectral</a></h1>
-						<nav id="nav">
-							<ul>
-								<li class="special">
-									<a href="#menu" class="menuToggle"><span>Menu</span></a>
-									<div id="menu">
-										<ul>
-											<li><a href="index.html">Home</a></li>
-											<li><a href="generic.html">Generic</a></li>
-											<li><a href="elements.html">Elements</a></li>
-											<li><a href="#">Sign Up</a></li>
-											<li><a href="#">Log In</a></li>
-										</ul>
-									</div>
-								</li>
-							</ul>
-						</nav>
-					</header>
+    /* ---- 3. Sections ---- */
+    section{padding:4rem 1rem;max-width:1100px;margin:auto}
+    section.alt{background:var(--bg-dark);color:var(--text-light);border-radius:6px}
+    h2{font-size:2rem;font-weight:400;margin-bottom:2rem;text-align:center}
 
-				<!-- Banner -->
-					<section id="banner">
-						<div class="inner">
-							<h2>Spectral</h2>
-							<p>Another fine responsive<br />
-							site template freebie<br />
-							crafted by <a href="http://html5up.net">HTML5 UP</a>.</p>
-							<ul class="actions special">
-								<li><a href="#" class="button primary">Activate</a></li>
-							</ul>
-						</div>
-						<a href="#one" class="more scrolly">Learn More</a>
-					</section>
+    /* ---- 4. Gallery grid ---- */
+    .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+    .gallery img{width:100%;height:220px;object-fit:cover;border-radius:4px}
 
-				<!-- One -->
-					<section id="one" class="wrapper style1 special">
-						<div class="inner">
-							<header class="major">
-								<h2>Arcu aliquet vel lobortis ata nisl<br />
-								eget augue amet aliquet nisl cep donec</h2>
-								<p>Aliquam ut ex ut augue consectetur interdum. Donec amet imperdiet eleifend<br />
-								fringilla tincidunt. Nullam dui leo Aenean mi ligula, rhoncus ullamcorper.</p>
-							</header>
-							<ul class="icons major">
-								<li><span class="icon fa-gem major style1"><span class="label">Lorem</span></span></li>
-								<li><span class="icon fa-heart major style2"><span class="label">Ipsum</span></span></li>
-								<li><span class="icon solid fa-code major style3"><span class="label">Dolor</span></span></li>
-							</ul>
-						</div>
-					</section>
+    /* ---- 5. Feature cards ---- */
+    .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem}
+    .card{background:#ffffff;border-radius:4px;padding:2rem;box-shadow:0 4px 8px rgba(0,0,0,0.05);text-align:center}
 
-				<!-- Two -->
-					<section id="two" class="wrapper alt style2">
-						<section class="spotlight">
-							<div class="image"><img src="images/pic01.jpg" alt="" /></div><div class="content">
-								<h2>Magna primis lobortis<br />
-								sed ullamcorper</h2>
-								<p>Aliquam ut ex ut augue consectetur interdum. Donec hendrerit imperdiet. Mauris eleifend fringilla nullam aenean mi ligula.</p>
-							</div>
-						</section>
-						<section class="spotlight">
-							<div class="image"><img src="images/pic02.jpg" alt="" /></div><div class="content">
-								<h2>Tortor dolore feugiat<br />
-								elementum magna</h2>
-								<p>Aliquam ut ex ut augue consectetur interdum. Donec hendrerit imperdiet. Mauris eleifend fringilla nullam aenean mi ligula.</p>
-							</div>
-						</section>
-						<section class="spotlight">
-							<div class="image"><img src="images/pic03.jpg" alt="" /></div><div class="content">
-								<h2>Augue eleifend aliquet<br />
-								sed condimentum</h2>
-								<p>Aliquam ut ex ut augue consectetur interdum. Donec hendrerit imperdiet. Mauris eleifend fringilla nullam aenean mi ligula.</p>
-							</div>
-						</section>
-					</section>
+    /* ---- 6. Contact grid ---- */
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+    .contact-form label{display:block;margin-bottom:0.3rem;font-weight:600}
+    .contact-form input,.contact-form textarea{width:100%;padding:0.7rem;border:1px solid #ccd6e0;border-radius:3px;margin-bottom:1rem}
+    .map iframe{width:100%;height:260px;border:0;border-radius:3px}
 
-				<!-- Three -->
-					<section id="three" class="wrapper style3 special">
-						<div class="inner">
-							<header class="major">
-								<h2>Accumsan mus tortor nunc aliquet</h2>
-								<p>Aliquam ut ex ut augue consectetur interdum. Donec amet imperdiet eleifend<br />
-								fringilla tincidunt. Nullam dui leo Aenean mi ligula, rhoncus ullamcorper.</p>
-							</header>
-							<ul class="features">
-								<li class="icon fa-paper-plane">
-									<h3>Arcu accumsan</h3>
-									<p>Augue consectetur sed interdum imperdiet et ipsum. Mauris lorem tincidunt nullam amet leo Aenean ligula consequat consequat.</p>
-								</li>
-								<li class="icon solid fa-laptop">
-									<h3>Ac Augue Eget</h3>
-									<p>Augue consectetur sed interdum imperdiet et ipsum. Mauris lorem tincidunt nullam amet leo Aenean ligula consequat consequat.</p>
-								</li>
-								<li class="icon solid fa-code">
-									<h3>Mus Scelerisque</h3>
-									<p>Augue consectetur sed interdum imperdiet et ipsum. Mauris lorem tincidunt nullam amet leo Aenean ligula consequat consequat.</p>
-								</li>
-								<li class="icon solid fa-headphones-alt">
-									<h3>Mauris Imperdiet</h3>
-									<p>Augue consectetur sed interdum imperdiet et ipsum. Mauris lorem tincidunt nullam amet leo Aenean ligula consequat consequat.</p>
-								</li>
-								<li class="icon fa-heart">
-									<h3>Aenean Primis</h3>
-									<p>Augue consectetur sed interdum imperdiet et ipsum. Mauris lorem tincidunt nullam amet leo Aenean ligula consequat consequat.</p>
-								</li>
-								<li class="icon fa-flag">
-									<h3>Tortor Ut</h3>
-									<p>Augue consectetur sed interdum imperdiet et ipsum. Mauris lorem tincidunt nullam amet leo Aenean ligula consequat consequat.</p>
-								</li>
-							</ul>
-						</div>
-					</section>
+    /* ---- 7. Language toggle ---- */
+    html[lang='en'] .lang-es{display:none}
+    html[lang='es'] .lang-en{display:none}
+    .toggle-wrap{text-align:center;margin-top:2rem}
+    .toggle-btn{cursor:pointer;margin:0 0.5rem;font-weight:600}
 
-				<!-- CTA -->
-					<section id="cta" class="wrapper style4">
-						<div class="inner">
-							<header>
-								<h2>Arcue ut vel commodo</h2>
-								<p>Aliquam ut ex ut augue consectetur interdum endrerit imperdiet amet eleifend fringilla.</p>
-							</header>
-							<ul class="actions stacked">
-								<li><a href="#" class="button fit primary">Activate</a></li>
-								<li><a href="#" class="button fit">Learn More</a></li>
-							</ul>
-						</div>
-					</section>
+    /* ---- 8. Footer ---- */
+    footer{background:var(--bg-dark);color:var(--text-light);text-align:center;padding:2rem 1rem;margin-top:4rem;font-size:0.9rem}
+    @media(max-width:750px){
+      .contact-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<ul class="icons">
-							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-							<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-						</ul>
-						<ul class="copyright">
-							<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-						</ul>
-					</footer>
+  <!-- Hero / Banner -->
+  <header class="hero">
+    <h1>CROP ANALYZER</h1>
+    <p class="lang-en">AI-driven crop intelligence for the Pampas and beyond</p>
+    <p class="lang-es">Inteligencia agrícola impulsada por IA para la Pampa y más allá</p>
+    <a href="#about" class="btn lang-en">Learn More</a>
+    <a href="#about" class="btn lang-es">Saber más</a>
+    <div class="toggle-wrap">
+      <span class="toggle-btn" onclick="setLang('en')">EN</span> |
+      <span class="toggle-btn" onclick="setLang('es')">ES</span>
+    </div>
+  </header>
 
-			</div>
+  <!-- About -->
+  <section id="about">
+    <h2 class="lang-en">About Us</h2>
+    <h2 class="lang-es">Sobre Nosotros</h2>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+    <p class="lang-en">
+      Crop Analyzer merges government, satellite and weather-station data, then applies machine-learning models trained on historical harvests to deliver real-time alerts, boosting yield while preserving soil health worldwide.
+    </p>
+    <p class="lang-es">
+      Crop Analyzer integra datos gubernamentales, satelitales y meteorológicos, y aplica modelos de aprendizaje automático entrenados con cosechas históricas para ofrecer alertas en tiempo real que aumentan el rendimiento preservando la salud del suelo a nivel global.
+    </p>
+  </section>
 
-	</body>
+  <!-- Features -->
+  <section class="alt">
+    <h2 class="lang-en">Our Technology</h2>
+    <h2 class="lang-es">Nuestra Tecnología</h2>
+
+    <div class="features">
+      <div class="card">
+        <h3>🛰️ <span class="lang-en">Satellite Data</span><span class="lang-es">Datos Satelitales</span></h3>
+        <p class="lang-en">NDVI and radar imagery every 5 days.</p>
+        <p class="lang-es">Imágenes NDVI y radar cada 5 días.</p>
+      </div>
+      <div class="card">
+        <h3>🌦️ <span class="lang-en">Weather Grid</span><span class="lang-es">Red Meteorológica</span></h3>
+        <p class="lang-en">4 km resolution forecasts and live sensors.</p>
+        <p class="lang-es">Pronósticos a 4 km y sensores en vivo.</p>
+      </div>
+      <div class="card">
+        <h3>📊 <span class="lang-en">Open-Gov Stats</span><span class="lang-es">Datos Oficiales</span></h3>
+        <p class="lang-en">Legislation & historical yields integrated.</p>
+        <p class="lang-es">Legislación y rindes históricos integrados.</p>
+      </div>
+      <div class="card">
+        <h3>🤖 <span class="lang-en">AI Alerts</span><span class="lang-es">Alertas IA</span></h3>
+        <p class="lang-en">Pest, frost & drought risk scores.</p>
+        <p class="lang-es">Riesgos de plagas, heladas y sequía.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section>
+    <h2 class="lang-en">Pampas Gallery</h2>
+    <h2 class="lang-es">Galería Pampeana</h2>
+
+    <div class="gallery">
+      <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=900&q=80" alt="">
+      <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=900&q=80" alt="">
+      <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=900&q=80" alt="">
+      <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=900&q=80" alt="">
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="alt" id="contact">
+    <h2 class="lang-en">Contact Us</h2>
+    <h2 class="lang-es">Contáctanos</h2>
+
+    <div class="contact-grid">
+      <form class="contact-form">
+        <label class="lang-en">Name</label><label class="lang-es">Nombre</label>
+        <input type="text" required>
+        <label class="lang-en">Email</label><label class="lang-es">Correo electrónico</label>
+        <input type="email" required>
+        <label class="lang-en">Phone</label><label class="lang-es">Teléfono</label>
+        <input type="tel">
+        <label class="lang-en">Message</label><label class="lang-es">Mensaje</label>
+        <textarea rows="4" required></textarea>
+        <button class="btn lang-en" type="submit">Send</button>
+        <button class="btn lang-es" type="submit">Enviar</button>
+      </form>
+
+      <div class="map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.32!2d-58.38!3d-34.61!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDM2JzUwLjQiUyA1OMKwMjI" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <span class="lang-en">© 2025 Crop Analyzer</span>
+    <span class="lang-es">© 2025 Analizador de Cultivos</span>
+  </footer>
+
+  <!-- Language toggle script -->
+  <script>
+    function setLang(lang){
+      document.documentElement.lang=lang;
+      try{localStorage.setItem('site-lang', lang);}catch(e){}
+    }
+    // initialize
+    (function(){
+      var saved='en';
+      try{saved=localStorage.getItem('site-lang')||'en';}catch(e){}
+      setLang(saved);
+    })();
+  </script>
+</body>
 </html>
